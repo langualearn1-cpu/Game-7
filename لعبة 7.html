@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورقة عمل تفاعلية - فعل الكينونة Verb to be (Present Tense)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cairo, Fredoka & Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        en: ['Fredoka', 'Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            coral: '#F43F5E',
+                            purple: '#A855F7',
+                            sky: '#0284C7',
+                            amber: '#F59E0B',
+                            teal: '#0D9488'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: radial-gradient(circle at 10% 15%, #fef2f2 0%, #fdf4ff 35%, #f0f9ff 70%, #fffbeb 100%);
+            min-height: 100vh;
+        }
+        .en-font {
+            font-family: 'Fredoka', 'Nunito', sans-serif;
+        }
+        /* Notebook Handwriting Rule Style */
+        .handwriting-slot {
+            position: relative;
+            background-color: #ffffff;
+            border-bottom: 2.5px solid #334155;
+            transition: all 0.2s ease;
+        }
+        .handwriting-slot::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            border-bottom: 1.5px dashed #cbd5e1;
+            pointer-events: none;
+        }
+        .active-chip {
+            box-shadow: 0 0 0 3.5px #A855F7, 0 8px 18px -2px rgba(168, 85, 247, 0.4) !important;
+            transform: translateY(-3px) scale(1.06);
+            background-color: #F3E8FF !important;
+            border-color: #7E22CE !important;
+        }
+        .slot-target-hover {
+            background-color: #FEF9C3 !important;
+            border-bottom-color: #D97706 !important;
+            transform: scale(1.02);
+        }
+        /* Colorful bubble gradients matching the image */
+        .bubble-am {
+            background: linear-gradient(135deg, #FECDD3 0%, #FDA4AF 50%, #FBBF24 100%);
+        }
+        .bubble-is {
+            background: linear-gradient(135deg, #E9D5FF 0%, #F472B6 50%, #C084FC 100%);
+        }
+        .bubble-are {
+            background: linear-gradient(135deg, #BAE6FD 0%, #67E8F9 50%, #A5F3FC 100%);
+        }
+        @keyframes float-subtle {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        .float-icon {
+            animation: float-subtle 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="text-slate-800 pb-20 selection:bg-purple-100">
+
+    <!-- Top Header mimicking the card's branding -->
+    <header class="bg-white/95 backdrop-blur-md border-b border-purple-100 sticky top-0 z-40 shadow-xs">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-rose-400 via-purple-500 to-sky-500 flex items-center justify-center text-white text-2xl shadow-sm float-icon">
+                    📘
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs bg-purple-100 text-purple-900 font-extrabold px-2.5 py-0.5 rounded-full en-font tracking-wide">LANGUA LEARN</span>
+                        <span class="text-xs text-slate-500 hidden sm:inline">| إعداد: المعلم ماجد السويهري</span>
+                    </div>
+                    <h1 class="text-base sm:text-lg font-black text-slate-800 leading-tight">
+                        ورقة عمل تفاعلية: فعل الكينونة <span class="en-font text-purple-700">Verb to be "present tense"</span>
+                    </h1>
+                </div>
+            </div>
+
+            <!-- Sound & Score Controls -->
+            <div class="flex items-center gap-3">
+                <button onclick="toggleSound()" id="soundToggleBtn" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition" title="كتم أو تشغيل المؤثرات">
+                    <span id="soundIcon" class="text-lg">🔊</span>
+                </button>
+                <div class="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 px-3.5 py-1.5 rounded-2xl flex items-center gap-2 shadow-xs">
+                    <span class="text-amber-500 text-lg">⭐</span>
+                    <span class="text-xs font-bold text-purple-950">الدرجة:</span>
+                    <span id="totalPoints" class="font-black text-purple-950 text-base en-font">0</span>
+                    <span class="text-xs text-purple-700">/ 14</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 mt-6">
+        <!-- Tab Navigation Buttons -->
+        <div class="flex flex-wrap justify-center gap-2 mb-6">
+            <button onclick="switchTab('tab-card')" id="btn-tab-card" class="tab-btn px-4 sm:px-5 py-2.5 rounded-2xl font-bold text-sm transition shadow-sm flex items-center gap-2 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">
+                <span>📖</span>
+                <span>بطاقة القاعدة والأمثلة (Rules Card)</span>
+            </button>
+            <button onclick="switchTab('tab-blanks')" id="btn-tab-blanks" class="tab-btn px-4 sm:px-5 py-2.5 rounded-2xl font-black text-sm transition shadow-sm flex items-center gap-2 bg-purple-600 text-white shadow-purple-200">
+                <span>✍️</span>
+                <span>تمرين إكمال الفراغات (Fill in the Blanks)</span>
+            </button>
+            <button onclick="switchTab('tab-bubbles')" id="btn-tab-bubbles" class="tab-btn px-4 sm:px-5 py-2.5 rounded-2xl font-bold text-sm transition shadow-sm flex items-center gap-2 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">
+                <span>🔮</span>
+                <span>فرز الضمائر في الفقاعات (Bubble Sorting)</span>
+            </button>
+            <button onclick="switchTab('tab-reorder')" id="btn-tab-reorder" class="tab-btn px-4 sm:px-5 py-2.5 rounded-2xl font-bold text-sm transition shadow-sm flex items-center gap-2 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">
+                <span>🔀</span>
+                <span>تحدي بناء الجمل (Sentence Builder)</span>
+            </button>
+        </div>
+
+        <!-- TAB 0: INTERACTIVE LESSON CARD (DIRECT REPLICA OF USER IMAGE) -->
+        <section id="tab-card" class="tab-content hidden">
+            <div class="bg-white/95 rounded-3xl p-5 md:p-8 shadow-xl border-2 border-purple-200 relative overflow-hidden">
+                <!-- Floral Background Decors -->
+                <div class="absolute -top-10 -right-10 w-36 h-36 bg-rose-100/50 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="absolute -bottom-10 -left-10 w-36 h-36 bg-sky-100/50 rounded-full blur-2xl pointer-events-none"></div>
+
+                <div class="text-center pb-4 border-b border-slate-100">
+                    <span class="text-xs bg-purple-100 text-purple-900 font-bold px-3 py-1 rounded-full en-font">LESSON SUMMARY</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-slate-800 en-font mt-2">
+                        verb to be "present tense"
+                    </h2>
+                    <h3 class="text-lg md:text-xl font-black text-purple-700 mt-0.5">
+                        الفعل { يكون } في ( الحاضر )
+                    </h3>
+                    <p class="text-xs text-slate-600 mt-1">
+                        اضغط على أي جملة للاستماع إلى نطقها الإنجليزي السليم، ولاحظ اقتران كل ضمير بفعله المناسب.
+                    </p>
+                </div>
+
+                <!-- 3 Visual Groups Matching the Image -->
+                <div class="mt-6 space-y-6">
+
+                    <!-- Group 1: I -> am -->
+                    <div class="bg-gradient-to-r from-rose-50/60 to-amber-50/60 rounded-3xl p-5 border-2 border-rose-200 flex flex-col md:flex-row items-center justify-between gap-6">
+                        <!-- Pronoun to Verb Pointer -->
+                        <div class="flex items-center gap-3">
+                            <div class="w-16 h-16 rounded-full bubble-am flex items-center justify-center text-white text-2xl font-black en-font shadow-md border-2 border-white">
+                                I
+                            </div>
+                            <span class="text-2xl text-amber-500 font-bold">👉</span>
+                            <div class="w-16 h-16 rounded-full bg-amber-400 flex items-center justify-center text-amber-950 text-xl font-black en-font shadow-md border-2 border-white">
+                                am
+                            </div>
+                        </div>
+
+                        <!-- Example Box -->
+                        <div class="flex-1 w-full bg-white rounded-2xl p-4 border border-rose-200 shadow-2xs flex items-center justify-between gap-4">
+                            <div class="flex items-center gap-3" dir="ltr">
+                                <span class="w-4 h-4 rounded-full bg-rose-400"></span>
+                                <span class="en-font text-xl md:text-2xl font-black text-slate-800">
+                                    I <span class="text-rose-500 underline decoration-rose-300">am</span> a doctor.
+                                </span>
+                                <button onclick="speakEnglish('I am a doctor.')" class="p-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 transition" title="استمع للنطق">
+                                    🔊
+                                </button>
+                            </div>
+                            <!-- Cute Doctor SVG Graphic -->
+                            <div class="w-16 h-16 bg-rose-50 rounded-2xl flex items-center justify-center border border-rose-100 flex-shrink-0" title="Doctor 👩‍⚕️">
+                                <svg class="w-12 h-12" viewBox="0 0 80 80" fill="none">
+                                    <circle cx="40" cy="28" r="13" fill="#FED7AA"/>
+                                    <path d="M26 28 C26 15, 54 15, 54 28 C54 36, 52 42, 50 44 L30 44 C28 42, 26 36, 26 28 Z" fill="#92400E"/>
+                                    <circle cx="36" cy="27" r="1.5" fill="#1E293B"/>
+                                    <circle cx="44" cy="27" r="1.5" fill="#1E293B"/>
+                                    <path d="M38 33 Q40 35 42 33" stroke="#E11D48" stroke-width="1.2" fill="none"/>
+                                    <path d="M24 50 L20 72 L60 72 L56 50 Z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+                                    <!-- Stethoscope -->
+                                    <path d="M33 50 C33 60, 47 60, 47 50" stroke="#0284C7" stroke-width="2.5" fill="none"/>
+                                    <circle cx="40" cy="62" r="3" fill="#0284C7"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Group 2: He, she, it -> is -->
+                    <div class="bg-gradient-to-r from-purple-50/60 to-pink-50/60 rounded-3xl p-5 border-2 border-purple-200 flex flex-col md:flex-row items-center justify-between gap-6">
+                        <!-- Pronouns Bubble to Verb Pointer -->
+                        <div class="flex items-center gap-3">
+                            <div class="w-24 h-36 rounded-3xl bubble-is flex flex-col items-center justify-center text-white text-xl font-black en-font shadow-md border-2 border-white gap-1 py-2">
+                                <span>He</span>
+                                <span>she</span>
+                                <span>it</span>
+                            </div>
+                            <span class="text-2xl text-amber-500 font-bold">👉</span>
+                            <div class="w-16 h-16 rounded-full bg-amber-400 flex items-center justify-center text-amber-950 text-xl font-black en-font shadow-md border-2 border-white">
+                                is
+                            </div>
+                        </div>
+
+                        <!-- Examples Stack -->
+                        <div class="flex-1 w-full space-y-3">
+                            <!-- Example 1: She is a nurse -->
+                            <div class="bg-white rounded-2xl p-3.5 border border-purple-200 shadow-2xs flex items-center justify-between gap-4">
+                                <div class="flex items-center gap-3" dir="ltr">
+                                    <span class="w-4 h-4 rounded-full bg-emerald-400"></span>
+                                    <span class="en-font text-lg md:text-xl font-black text-slate-800">
+                                        She <span class="text-sky-600 underline decoration-sky-300">is</span> a nurse.
+                                    </span>
+                                    <button onclick="speakEnglish('She is a nurse.')" class="p-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-600 transition" title="استمع للنطق">
+                                        🔊
+                                    </button>
+                                </div>
+                                <!-- Nurse SVG Graphic -->
+                                <div class="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center border border-emerald-100 flex-shrink-0" title="Nurse 🩺">
+                                    <svg class="w-11 h-11" viewBox="0 0 80 80" fill="none">
+                                        <circle cx="40" cy="30" r="12" fill="#FED7AA"/>
+                                        <path d="M26 30 C26 18, 54 18, 54 30 Z" fill="#92400E"/>
+                                        <rect x="32" y="14" width="16" height="8" rx="2" fill="#FFFFFF" stroke="#0D9488" stroke-width="1.5"/>
+                                        <line x1="40" y1="16" x2="40" y2="20" stroke="#EF4444" stroke-width="2"/>
+                                        <line x1="38" y1="18" x2="42" y2="18" stroke="#EF4444" stroke-width="2"/>
+                                        <circle cx="36" cy="30" r="1.5" fill="#1E293B"/>
+                                        <circle cx="44" cy="30" r="1.5" fill="#1E293B"/>
+                                        <path d="M38 35 Q40 37 42 35" stroke="#E11D48" stroke-width="1.2" fill="none"/>
+                                        <path d="M26 50 L22 70 L58 70 L54 50 Z" fill="#E0F2FE" stroke="#0284C7" stroke-width="1.5"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Example 2: He is happy -->
+                            <div class="bg-white rounded-2xl p-3.5 border border-purple-200 shadow-2xs flex items-center justify-between gap-4">
+                                <div class="flex items-center gap-3" dir="ltr">
+                                    <span class="w-4 h-4 rounded-full bg-emerald-400"></span>
+                                    <span class="en-font text-lg md:text-xl font-black text-slate-800">
+                                        He <span class="text-sky-600 underline decoration-sky-300">is</span> happy.
+                                    </span>
+                                    <button onclick="speakEnglish('He is happy.')" class="p-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-600 transition" title="استمع للنطق">
+                                        🔊
+                                    </button>
+                                </div>
+                                <!-- Happy Boy SVG Graphic -->
+                                <div class="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center border border-amber-100 flex-shrink-0" title="Happy boy 😊">
+                                    <svg class="w-11 h-11" viewBox="0 0 80 80" fill="none">
+                                        <circle cx="40" cy="36" r="16" fill="#FED7AA"/>
+                                        <path d="M24 30 C24 16, 56 16, 56 30 Z" fill="#78350F"/>
+                                        <circle cx="34" cy="34" r="2" fill="#1E293B"/>
+                                        <circle cx="46" cy="34" r="2" fill="#1E293B"/>
+                                        <path d="M32 40 Q40 48 48 40 Z" fill="#E11D48"/>
+                                        <circle cx="30" cy="39" r="2.5" fill="#FDA4AF"/>
+                                        <circle cx="50" cy="39" r="2.5" fill="#FDA4AF"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Group 3: We, they, you -> are -->
+                    <div class="bg-gradient-to-r from-sky-50/60 to-teal-50/60 rounded-3xl p-5 border-2 border-sky-200 flex flex-col md:flex-row items-center justify-between gap-6">
+                        <!-- Pronouns Bubble to Verb Pointer -->
+                        <div class="flex items-center gap-3">
+                            <div class="w-24 h-36 rounded-3xl bubble-are flex flex-col items-center justify-center text-sky-950 text-xl font-black en-font shadow-md border-2 border-white gap-1 py-2">
+                                <span>We</span>
+                                <span>they</span>
+                                <span>you</span>
+                            </div>
+                            <span class="text-2xl text-amber-500 font-bold">👉</span>
+                            <div class="w-16 h-16 rounded-full bg-amber-400 flex items-center justify-center text-amber-950 text-xl font-black en-font shadow-md border-2 border-white">
+                                are
+                            </div>
+                        </div>
+
+                        <!-- Examples Stack -->
+                        <div class="flex-1 w-full space-y-3">
+                            <!-- Example 1: They are students -->
+                            <div class="bg-white rounded-2xl p-3.5 border border-sky-200 shadow-2xs flex items-center justify-between gap-4">
+                                <div class="flex items-center gap-3" dir="ltr">
+                                    <span class="w-4 h-4 rounded-full bg-amber-400"></span>
+                                    <span class="en-font text-lg md:text-xl font-black text-slate-800">
+                                        They <span class="text-purple-600 underline decoration-purple-300">are</span> students.
+                                    </span>
+                                    <button onclick="speakEnglish('They are students.')" class="p-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-600 transition" title="استمع للنطق">
+                                        🔊
+                                    </button>
+                                </div>
+                                <!-- Students with Backpacks SVG Graphic -->
+                                <div class="w-14 h-14 bg-sky-50 rounded-2xl flex items-center justify-center border border-sky-100 flex-shrink-0" title="Students 🎒">
+                                    <svg class="w-11 h-11" viewBox="0 0 80 80" fill="none">
+                                        <circle cx="28" cy="28" r="8" fill="#FED7AA"/>
+                                        <circle cx="52" cy="28" r="8" fill="#FED7AA"/>
+                                        <path d="M20 44 L36 44 L34 65 L22 65 Z" fill="#3B82F6"/>
+                                        <path d="M44 44 L60 44 L58 65 L46 65 Z" fill="#EC4899"/>
+                                        <rect x="14" y="44" width="6" height="12" rx="2" fill="#F59E0B"/>
+                                        <rect x="60" y="44" width="6" height="12" rx="2" fill="#8B5CF6"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Example 2: You are beautiful -->
+                            <div class="bg-white rounded-2xl p-3.5 border border-sky-200 shadow-2xs flex items-center justify-between gap-4">
+                                <div class="flex items-center gap-3" dir="ltr">
+                                    <span class="w-4 h-4 rounded-full bg-amber-400"></span>
+                                    <span class="en-font text-lg md:text-xl font-black text-slate-800">
+                                        You <span class="text-purple-600 underline decoration-purple-300">are</span> beautiful.
+                                    </span>
+                                    <button onclick="speakEnglish('You are beautiful.')" class="p-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-600 transition" title="استمع للنطق">
+                                        🔊
+                                    </button>
+                                </div>
+                                <!-- Flower / Beautiful SVG Graphic -->
+                                <div class="w-14 h-14 bg-pink-50 rounded-2xl flex items-center justify-center border border-pink-100 flex-shrink-0" title="Beautiful 🌸">
+                                    <svg class="w-11 h-11" viewBox="0 0 80 80" fill="none">
+                                        <circle cx="40" cy="40" r="7" fill="#FBBF24"/>
+                                        <circle cx="40" cy="26" r="6" fill="#F472B6"/>
+                                        <circle cx="40" cy="54" r="6" fill="#F472B6"/>
+                                        <circle cx="26" cy="40" r="6" fill="#F472B6"/>
+                                        <circle cx="54" cy="40" r="6" fill="#F472B6"/>
+                                        <path d="M40 58 L40 72" stroke="#22C55E" stroke-width="3"/>
+                                        <path d="M40 66 Q48 62 46 70" stroke="#22C55E" stroke-width="2" fill="#86EFAC"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-6 text-center">
+                    <button onclick="switchTab('tab-blanks')" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 text-white font-black px-8 py-3.5 rounded-2xl shadow-lg shadow-purple-200 transition active:scale-95">
+                        الانتقال للتمارين التفاعلية 👈
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 1: FILL IN THE BLANKS WITH AM / IS / ARE -->
+        <section id="tab-blanks" class="tab-content block">
+            <div class="bg-white/95 rounded-3xl p-5 md:p-8 shadow-xl border-2 border-purple-200 relative overflow-hidden">
+                <div class="text-center pb-2">
+                    <span class="text-xs bg-purple-100 text-purple-900 font-bold px-3 py-1 rounded-full en-font">SECTION I</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-slate-800 en-font mt-1">
+                        Fill in the blanks with: am / is / are
+                    </h2>
+                    <p class="text-xs text-slate-600 mt-1">
+                        اسحب الفعل المناسب وضعه في الفراغ، أو <span class="text-purple-700 font-bold underline">انقر على الكلمة ثم انقر على الفراغ</span> المخصص لها.
+                    </p>
+                </div>
+
+                <!-- Word Bank for am / is / are -->
+                <div class="bg-gradient-to-r from-purple-50 via-pink-50 to-sky-50 border-2 border-purple-300 rounded-3xl p-4 my-5 shadow-xs">
+                    <div class="flex items-center justify-between mb-3 text-xs font-bold text-purple-950">
+                        <span class="flex items-center gap-1.5">
+                            <span class="text-amber-500 text-base">⭐</span>
+                            <span>بنك الأفعال (Word Bank) - اختر أو اسحب:</span>
+                        </span>
+                        <span class="text-slate-500 text-[11px]">جاهز للماوس والشاشات اللمسية</span>
+                    </div>
+
+                    <div id="blanksWordBank" class="grid grid-cols-3 gap-3 pt-1">
+                        <!-- Card 1: am -->
+                        <div id="chip-am" onclick="selectBankWord('am', this)" draggable="true" ondragstart="handleDragStart(event, 'am')" class="word-card cursor-pointer bg-white border-2 border-rose-400 hover:border-rose-600 rounded-2xl p-3 text-center shadow-xs transition hover:scale-102 select-none">
+                            <div class="en-font font-black text-rose-600 text-2xl">am</div>
+                            <div class="text-[11px] text-slate-500 font-bold mt-1">مع الضمير (I)</div>
+                        </div>
+                        <!-- Card 2: is -->
+                        <div id="chip-is" onclick="selectBankWord('is', this)" draggable="true" ondragstart="handleDragStart(event, 'is')" class="word-card cursor-pointer bg-white border-2 border-purple-400 hover:border-purple-600 rounded-2xl p-3 text-center shadow-xs transition hover:scale-102 select-none">
+                            <div class="en-font font-black text-purple-700 text-2xl">is</div>
+                            <div class="text-[11px] text-slate-500 font-bold mt-1">مع (He, She, It)</div>
+                        </div>
+                        <!-- Card 3: are -->
+                        <div id="chip-are" onclick="selectBankWord('are', this)" draggable="true" ondragstart="handleDragStart(event, 'are')" class="word-card cursor-pointer bg-white border-2 border-sky-400 hover:border-sky-600 rounded-2xl p-3 text-center shadow-xs transition hover:scale-102 select-none">
+                            <div class="en-font font-black text-sky-700 text-2xl">are</div>
+                            <div class="text-[11px] text-slate-500 font-bold mt-1">مع (We, They, You)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Questions Container -->
+                <div id="blanksQuestionsContainer" class="space-y-4 mt-6">
+                    <!-- Populated dynamically via JS -->
+                </div>
+
+                <!-- Part I Action Bar -->
+                <div class="mt-8 pt-5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div id="blanksFeedback" class="text-sm font-bold text-slate-700"></div>
+                    <div class="flex items-center gap-3 w-full sm:w-auto">
+                        <button onclick="resetBlanks()" class="flex-1 sm:flex-initial px-5 py-3 rounded-2xl border border-slate-300 text-slate-600 hover:bg-slate-100 font-bold text-sm transition">
+                            🔄 إعادة المحاولة
+                        </button>
+                        <button onclick="checkBlanks()" class="flex-1 sm:flex-initial bg-gradient-to-r from-purple-600 via-purple-700 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white font-black px-8 py-3.5 rounded-2xl shadow-lg shadow-purple-200 active:scale-95 transition flex items-center justify-center gap-2">
+                            <span>✓</span>
+                            <span>تصحيح الإجابات</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: PRONOUN BUBBLE SORTING (AM / IS / ARE) -->
+        <section id="tab-bubbles" class="tab-content hidden">
+            <div class="bg-white/95 rounded-3xl p-5 md:p-8 shadow-xl border-2 border-purple-200">
+                <div class="text-center max-w-2xl mx-auto pb-4 border-b border-slate-100">
+                    <span class="text-xs bg-pink-100 text-pink-800 font-bold px-3 py-1 rounded-full en-font">SECTION II</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-slate-800 mt-1">
+                        تحدي تصنيف الضمائر في فقاعات الفعل الصحيحة
+                    </h2>
+                    <p class="text-xs text-slate-600 mt-1">
+                        اضغط على الضمير الإنجليزي من الصندوق ثم اضغط على الفقاعة المناسبة له، أو اسحبه مباشرة إلى الفقاعة.
+                    </p>
+                </div>
+
+                <!-- Pronouns Waiting Pool -->
+                <div class="bg-purple-50/80 border-2 border-dashed border-purple-300 rounded-3xl p-4 my-5 text-center">
+                    <span class="text-xs font-bold text-purple-900 block mb-2">⭐ الضمائر التي تنتظر التصنيف (Pronouns Pool):</span>
+                    <div id="pronounPool" class="flex flex-wrap items-center justify-center gap-3 min-h-[50px]">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- 3 Target Bubbles matching the image -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+
+                    <!-- Bubble 1: AM -->
+                    <div id="bucket-am" onclick="handleBucketClick('am')" ondragover="handleBucketDragOver(event, this)" ondragleave="handleBucketDragLeave(this)" ondrop="handleBucketDrop(event, 'am')" class="rounded-3xl border-2 border-rose-300 bg-rose-50/60 p-5 min-h-[260px] flex flex-col justify-between transition hover:border-rose-500 cursor-pointer shadow-xs">
+                        <div>
+                            <div class="flex items-center justify-between pb-3 mb-3 border-b border-rose-200">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-10 h-10 rounded-full bg-rose-500 text-white flex items-center justify-center font-black en-font text-lg shadow-xs">am</div>
+                                    <span class="text-xs font-bold text-rose-900">يأخذ ضميراً واحداً</span>
+                                </div>
+                                <span class="text-xs font-bold bg-white px-2.5 py-1 rounded-xl text-rose-700 border border-rose-200">(1 ضمير)</span>
+                            </div>
+                            <div id="content-bucket-am" class="flex flex-wrap gap-2 min-h-[140px] items-start content-start"></div>
+                        </div>
+                        <div class="text-center text-[11px] text-rose-700 font-bold bg-rose-100/60 py-1.5 rounded-xl">
+                            👈 اضغط هنا لوضع الضمير المختار
+                        </div>
+                    </div>
+
+                    <!-- Bubble 2: IS -->
+                    <div id="bucket-is" onclick="handleBucketClick('is')" ondragover="handleBucketDragOver(event, this)" ondragleave="handleBucketDragLeave(this)" ondrop="handleBucketDrop(event, 'is')" class="rounded-3xl border-2 border-purple-300 bg-purple-50/60 p-5 min-h-[260px] flex flex-col justify-between transition hover:border-purple-500 cursor-pointer shadow-xs">
+                        <div>
+                            <div class="flex items-center justify-between pb-3 mb-3 border-b border-purple-200">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center font-black en-font text-lg shadow-xs">is</div>
+                                    <span class="text-xs font-bold text-purple-900">ضمائر المفرد الغائب</span>
+                                </div>
+                                <span class="text-xs font-bold bg-white px-2.5 py-1 rounded-xl text-purple-700 border border-purple-200">(3 ضمائر)</span>
+                            </div>
+                            <div id="content-bucket-is" class="flex flex-wrap gap-2 min-h-[140px] items-start content-start"></div>
+                        </div>
+                        <div class="text-center text-[11px] text-purple-700 font-bold bg-purple-100/60 py-1.5 rounded-xl">
+                            👈 اضغط هنا لوضع الضمير المختار
+                        </div>
+                    </div>
+
+                    <!-- Bubble 3: ARE -->
+                    <div id="bucket-are" onclick="handleBucketClick('are')" ondragover="handleBucketDragOver(event, this)" ondragleave="handleBucketDragLeave(this)" ondrop="handleBucketDrop(event, 'are')" class="rounded-3xl border-2 border-sky-300 bg-sky-50/60 p-5 min-h-[260px] flex flex-col justify-between transition hover:border-sky-500 cursor-pointer shadow-xs">
+                        <div>
+                            <div class="flex items-center justify-between pb-3 mb-3 border-b border-sky-200">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-10 h-10 rounded-full bg-sky-600 text-white flex items-center justify-center font-black en-font text-lg shadow-xs">are</div>
+                                    <span class="text-xs font-bold text-sky-900">ضمائر الجمع والمخاطب</span>
+                                </div>
+                                <span class="text-xs font-bold bg-white px-2.5 py-1 rounded-xl text-sky-700 border border-sky-200">(3 ضمائر)</span>
+                            </div>
+                            <div id="content-bucket-are" class="flex flex-wrap gap-2 min-h-[140px] items-start content-start"></div>
+                        </div>
+                        <div class="text-center text-[11px] text-sky-700 font-bold bg-sky-100/60 py-1.5 rounded-xl">
+                            👈 اضغط هنا لوضع الضمير المختار
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Part II Action Bar -->
+                <div class="mt-8 pt-5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div id="bubblesFeedback" class="text-sm font-bold text-slate-700"></div>
+                    <div class="flex items-center gap-3 w-full sm:w-auto">
+                        <button onclick="resetBubbles()" class="flex-1 sm:flex-initial px-5 py-3 rounded-2xl border border-slate-300 text-slate-600 hover:bg-slate-100 font-bold text-sm transition">
+                            🔄 إعادة تعيين
+                        </button>
+                        <button onclick="checkBubbles()" class="flex-1 sm:flex-initial bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 text-white font-black px-8 py-3.5 rounded-2xl shadow-lg shadow-pink-200 active:scale-95 transition">
+                            تحقق من الفقاعات
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: SENTENCE BUILDER / REORDER -->
+        <section id="tab-reorder" class="tab-content hidden">
+            <div class="bg-white/95 rounded-3xl p-5 md:p-8 shadow-xl border-2 border-purple-200">
+                <div class="border-b border-slate-100 pb-4">
+                    <span class="text-xs bg-sky-100 text-sky-800 font-bold px-3 py-1 rounded-full en-font">SENTENCE BUILDER</span>
+                    <h2 class="text-2xl font-black text-slate-800 mt-1">تحدي رتّب الكلمات لتكوين جمل صحيحة</h2>
+                    <p class="text-xs text-slate-600 mt-1">
+                        انقر على الكلمات المبعثرة بالترتيب السليم لبناء الجمل، مع مراعاة موضع فعل الكينونة بعد الضمير مباشرة.
+                    </p>
+                </div>
+
+                <!-- Reorder Container -->
+                <div id="reorderContainer" class="mt-6 space-y-5">
+                    <!-- Populated via JS -->
+                </div>
+
+                <div class="mt-8 pt-5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div id="reorderFeedback" class="text-sm font-bold text-slate-700"></div>
+                    <button onclick="initReorder()" class="w-full sm:w-auto px-6 py-3 rounded-2xl border border-slate-300 text-slate-600 hover:bg-slate-100 font-bold text-sm transition">
+                        🔄 إعادة خلط الجمل
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Celebration Modal with Certificate -->
+    <div id="celebrationModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center shadow-2xl border-4 border-purple-300 relative transform transition-all">
+            <div class="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center text-4xl mx-auto mb-3 shadow-inner">
+                🏆
+            </div>
+            <span class="text-xs bg-purple-100 text-purple-900 font-bold px-3 py-1 rounded-full en-font">LANGUA LEARN AWARDS</span>
+            <h3 class="text-2xl font-black text-slate-800 mt-2">تهانينا! إتقان كامل ومتميز</h3>
+            <p class="text-xs text-slate-600 mt-2">
+                لقد أنجزت ورقة عمل فعل الكينونة <span class="en-font font-bold text-purple-700">Verb to be</span> واستوعبت جميع الضمائر والأفعال بنجاح رائع!
+            </p>
+            <div class="mt-4 p-3 bg-purple-50 rounded-2xl border border-purple-200 text-xs font-bold text-purple-950 flex items-center justify-center gap-2">
+                <span>⭐ إشراف المعلم:</span>
+                <span class="text-purple-950 font-black">ماجد السويهري</span>
+            </div>
+            <div class="mt-5">
+                <button onclick="closeModal()" class="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 hover:from-purple-700 text-white font-bold py-3 rounded-xl transition text-sm">
+                    إغلاق ومتابعة التدريب
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+        let audioContext = null;
+        let isMuted = false;
+
+        function initAudioEngine() {
+            if (!audioContext) audioContext = new AudioCtxClass();
+            if (audioContext.state === 'suspended') audioContext.resume();
+        }
+
+        function toggleSound() {
+            isMuted = !isMuted;
+            document.getElementById('soundIcon').innerText = isMuted ? '🔇' : '🔊';
+            document.getElementById('soundToggleBtn').classList.toggle('bg-rose-100', isMuted);
+        }
+
+        function playSoundFx(type) {
+            if (isMuted) return;
+            try {
+                initAudioEngine();
+                const now = audioContext.currentTime;
+                if (type === 'tap') {
+                    const osc = audioContext.createOscillator();
+                    const gain = audioContext.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(520, now);
+                    osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                    osc.connect(gain);
+                    gain.connect(audioContext.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                } else if (type === 'drop') {
+                    const osc = audioContext.createOscillator();
+                    const gain = audioContext.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(320, now);
+                    osc.frequency.exponentialRampToValueAtTime(640, now + 0.08);
+                    gain.gain.setValueAtTime(0.18, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                    osc.connect(gain);
+                    gain.connect(audioContext.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.08);
+                } else if (type === 'success') {
+                    [587.33, 880].forEach((freq, idx) => {
+                        const osc = audioContext.createOscillator();
+                        const gain = audioContext.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, now + idx * 0.09);
+                        gain.gain.setValueAtTime(0.18, now + idx * 0.09);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.09 + 0.2);
+                        osc.connect(gain);
+                        gain.connect(audioContext.destination);
+                        osc.start(now + idx * 0.09);
+                        osc.stop(now + idx * 0.09 + 0.22);
+                    });
+                } else if (type === 'fail') {
+                    const osc = audioContext.createOscillator();
+                    const gain = audioContext.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, now);
+                    osc.frequency.linearRampToValueAtTime(140, now + 0.2);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                    osc.connect(gain);
+                    gain.connect(audioContext.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                } else if (type === 'cheer') {
+                    [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
+                        const osc = audioContext.createOscillator();
+                        const gain = audioContext.createGain();
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(f, now + i * 0.12);
+                        gain.gain.setValueAtTime(0.2, now + i * 0.12);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.12 + 0.35);
+                        osc.connect(gain);
+                        gain.connect(audioContext.destination);
+                        osc.start(now + i * 0.12);
+                        osc.stop(now + i * 0.12 + 0.38);
+                    });
+                }
+            } catch (err) {
+                console.log("Audio not initialized");
+            }
+        }
+
+        function speakEnglish(sentence) {
+            try {
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                    const utterance = new SpeechSynthesisUtterance(sentence);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.9;
+                    window.speechSynthesis.speak(utterance);
+                }
+            } catch (e) {
+                console.log("TTS not available");
+            }
+        }
+    </script>
+
+    <script>
+        let currentTotalScore = 0;
+        let scoredBlanksCount = 0;
+        let scoredBubblesCount = 0;
+
+        function updateGlobalScore(p1, p2) {
+            currentTotalScore = p1 + p2;
+            document.getElementById('totalPoints').innerText = currentTotalScore;
+            if (currentTotalScore >= 14) {
+                setTimeout(() => {
+                    document.getElementById('celebrationModal').classList.remove('hidden');
+                }, 600);
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('celebrationModal').classList.add('hidden');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = "tab-btn px-4 sm:px-5 py-2.5 rounded-2xl font-bold text-sm transition shadow-sm flex items-center gap-2 bg-white text-slate-700 border border-slate-200 hover:bg-slate-50";
+            });
+
+            const activeTab = document.getElementById(tabId);
+            if (activeTab) activeTab.classList.remove('hidden');
+
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.className = "tab-btn px-4 sm:px-5 py-2.5 rounded-2xl font-black text-sm transition shadow-sm flex items-center gap-2 bg-purple-600 text-white shadow-purple-200";
+            }
+        }
+
+        // 7 Sentences covering all pronouns from the worksheet
+        const blanksData = [
+            {
+                id: 'b1',
+                num: 1,
+                subject: 'I',
+                rest: 'a doctor.',
+                expected: 'am',
+                fullSentence: 'I am a doctor.',
+                hint: 'مع الضمير المتكلم I نستخدم am دائماً',
+                iconSvg: `<svg class="w-12 h-12" viewBox="0 0 80 80" fill="none"><circle cx="40" cy="28" r="13" fill="#FED7AA"/><path d="M26 28 C26 15, 54 15, 54 28 C54 36, 52 42, 50 44 L30 44 C28 42, 26 36, 26 28 Z" fill="#92400E"/><circle cx="36" cy="27" r="1.5" fill="#1E293B"/><circle cx="44" cy="27" r="1.5" fill="#1E293B"/><path d="M38 33 Q40 35 42 33" stroke="#E11D48" stroke-width="1.2" fill="none"/><path d="M24 50 L20 72 L60 72 L56 50 Z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/><path d="M33 50 C33 60, 47 60, 47 50" stroke="#0284C7" stroke-width="2.5" fill="none"/><circle cx="40" cy="62" r="3" fill="#0284C7"/></svg>`,
+                iconTitle: 'Doctor 👩‍⚕️'
+            },
+            {
+                id: 'b2',
+                num: 2,
+                subject: 'She',
+                rest: 'a nurse.',
+                expected: 'is',
+                fullSentence: 'She is a nurse.',
+                hint: 'مع المفرد المؤنث She نستخدم is',
+                iconSvg: `<svg class="w-12 h-12" viewBox="0 0 80 80" fill="none"><circle cx="40" cy="30" r="12" fill="#FED7AA"/><path d="M26 30 C26 18, 54 18, 54 30 Z" fill="#92400E"/><rect x="32" y="14" width="16" height="8" rx="2" fill="#FFFFFF" stroke="#0D9488" stroke-width="1.5"/><line x1="40" y1="16" x2="40" y2="20" stroke="#EF4444" stroke-width="2"/><line x1="38" y1="18" x2="42" y2="18" stroke="#EF4444" stroke-width="2"/><circle cx="36" cy="30" r="1.5" fill="#1E293B"/><circle cx="44" cy="30" r="1.5" fill="#1E293B"/><path d="M38 35 Q40 37 42 35" stroke="#E11D48" stroke-width="1.2" fill="none"/><path d="M26 50 L22 70 L58 70 L54 50 Z" fill="#E0F2FE" stroke="#0284C7" stroke-width="1.5"/></svg>`,
+                iconTitle: 'Nurse 🩺'
+            },
+            {
+                id: 'b3',
+                num: 3,
+                subject: 'He',
+                rest: 'happy.',
+                expected: 'is',
+                fullSentence: 'He is happy.',
+                hint: 'مع المفرد المذكر He نستخدم is',
+                iconSvg: `<svg class="w-12 h-12" viewBox="0 0 80 80" fill="none"><circle cx="40" cy="36" r="16" fill="#FED7AA"/><path d="M24 30 C24 16, 56 16, 56 30 Z" fill="#78350F"/><circle cx="34" cy="34" r="2" fill="#1E293B"/><circle cx="46" cy="34" r="2" fill="#1E293B"/><path d="M32 40 Q40 48 48 40 Z" fill="#E11D48"/><circle cx="30" cy="39" r="2.5" fill="#FDA4AF"/><circle cx="50" cy="39" r="2.5" fill="#FDA4AF"/></svg>`,
+                iconTitle: 'Happy boy 😊'
+            },
+            {
+                id: 'b4',
+                num: 4,
+                subject: 'They',
+                rest: 'students.',
+                expected: 'are',
+                fullSentence: 'They are students.',
+                hint: 'مع ضمير الجمع They نستخدم are',
+                iconSvg: `<svg class="w-12 h-12" viewBox="0 0 80 80" fill="none"><circle cx="28" cy="28" r="8" fill="#FED7AA"/><circle cx="52" cy="28" r="8" fill="#FED7AA"/><path d="M20 44 L36 44 L34 65 L22 65 Z" fill="#3B82F6"/><path d="M44 44 L60 44 L58 65 L46 65 Z" fill="#EC4899"/><rect x="14" y="44" width="6" height="12" rx="2" fill="#F59E0B"/><rect x="60" y="44" width="6" height="12" rx="2" fill="#8B5CF6"/></svg>`,
+                iconTitle: 'Students 🎒'
+            },
+            {
+                id: 'b5',
+                num: 5,
+                subject: 'You',
+                rest: 'beautiful.',
+                expected: 'are',
+                fullSentence: 'You are beautiful.',
+                hint: 'مع ضمير المخاطب You نستخدم are',
+                iconSvg: `<svg class="w-12 h-12" viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="7" fill="#FBBF24"/><circle cx="40" cy="26" r="6" fill="#F472B6"/><circle cx="40" cy="54" r="6" fill="#F472B6"/><circle cx="26" cy="40" r="6" fill="#F472B6"/><circle cx="54" cy="40" r="6" fill="#F472B6"/><path d="M40 58 L40 72" stroke="#22C55E" stroke-width="3"/></svg>`,
+                iconTitle: 'Flower 🌸'
+            },
+            {
+                id: 'b6',
+                num: 6,
+                subject: 'It',
+                rest: 'a lovely cat.',
+                expected: 'is',
+                fullSentence: 'It is a lovely cat.',
+                hint: 'مع مفرد غير العاقل It نستخدم is',
+                iconSvg: `<svg class="w-12 h-12" viewBox="0 0 80 80" fill="none"><circle cx="40" cy="45" r="14" fill="#FDBA74"/><polygon points="30,35 25,20 38,32" fill="#EA580C"/><polygon points="50,35 55,20 42,32" fill="#EA580C"/><circle cx="35" cy="44" r="2" fill="#1E293B"/><circle cx="45" cy="44" r="2" fill="#1E293B"/><ellipse cx="40" cy="48" rx="2" ry="1.5" fill="#EF4444"/><line x1="28" y1="46" x2="20" y2="44" stroke="#78350F" stroke-width="1.5"/><line x1="52" y1="46" x2="60" y2="44" stroke="#78350F" stroke-width="1.5"/></svg>`,
+                iconTitle: 'Cat 🐱'
+            },
+            {
+                id: 'b7',
+                num: 7,
+                subject: 'We',
+                rest: 'good friends.',
+                expected: 'are',
+                fullSentence: 'We are good friends.',
+                hint: 'مع ضمير المتكلمين الجمع We نستخدم are',
+                iconSvg: `<svg class="w-12 h-12" viewBox="0 0 80 80" fill="none"><circle cx="32" cy="32" r="9" fill="#FED7AA"/><circle cx="48" cy="32" r="9" fill="#FDBA74"/><path d="M22 52 C22 42, 42 42, 42 52 L40 68 L24 68 Z" fill="#10B981"/><path d="M38 52 C38 42, 58 42, 58 52 L56 68 L40 68 Z" fill="#6366F1"/><path d="M32 50 L48 50" stroke="#FBBF24" stroke-width="3" stroke-linecap="round"/></svg>`,
+                iconTitle: 'Friends 🤝'
+            }
+        ];
+
+        let userBlanks = {};
+        let selectedBlankWord = null;
+
+        function initBlanks() {
+            userBlanks = {};
+            selectedBlankWord = null;
+            document.querySelectorAll('.word-card').forEach(c => c.classList.remove('active-chip'));
+            document.getElementById('blanksFeedback').innerHTML = '';
+
+            const container = document.getElementById('blanksQuestionsContainer');
+            container.innerHTML = '';
+
+            blanksData.forEach(item => {
+                const card = document.createElement('div');
+                card.id = `row-${item.id}`;
+                card.className = "p-4 md:p-5 rounded-2xl bg-slate-50 border border-slate-200 transition hover:border-purple-300 flex flex-col md:flex-row items-center justify-between gap-4";
+                card.innerHTML = `
+                    <div class="flex-1 w-full" dir="ltr">
+                        <div class="flex items-center gap-2 mb-2 text-xs font-bold text-slate-500" dir="rtl">
+                            <span class="w-6 h-6 rounded-full bg-purple-100 text-purple-900 flex items-center justify-center font-black">${item.num}</span>
+                            <span>الفاعل: <b class="en-font text-purple-800 text-sm font-black">${item.subject}</b></span>
+                        </div>
+
+                        <!-- Sentence Line with handwriting slot -->
+                        <div class="flex flex-wrap items-center gap-2 en-font text-base md:text-lg font-bold text-slate-800">
+                            <span>${item.num}. ${item.subject}</span>
+                            
+                            <div id="slot-${item.id}"
+                                 data-item-id="${item.id}"
+                                 onclick="handleBlankSlotClick('${item.id}')"
+                                 ondragover="handleSlotDragOver(event, this)"
+                                 ondragleave="handleSlotDragLeave(this)"
+                                 ondrop="handleSlotDrop(event, '${item.id}')"
+                                 class="handwriting-slot min-w-[130px] min-h-[46px] px-3 py-1 rounded-md flex items-center justify-center cursor-pointer transition">
+                                <span class="placeholder text-xs text-slate-400 font-sans font-normal">اسحب أو انقر هنا</span>
+                            </div>
+
+                            <span>${item.rest}</span>
+
+                            <!-- Audio Pronunciation Button -->
+                            <button type="button" onclick="speakEnglish('${item.fullSentence}')" class="p-1.5 text-slate-400 hover:text-purple-600 rounded-lg hover:bg-purple-50 transition" title="استمع للنطق الإنجليزي">
+                                🔊
+                            </button>
+                        </div>
+
+                        <!-- Feedback message -->
+                        <div id="fbk-${item.id}" class="text-xs font-bold mt-2 text-right hidden" dir="rtl"></div>
+                    </div>
+
+                    <!-- Matching Visual Graphic -->
+                    <div class="w-18 h-18 flex-shrink-0 flex items-center justify-center bg-white rounded-2xl border border-purple-100 shadow-xs p-2">
+                        ${item.iconSvg}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function selectBankWord(word, cardEl) {
+            initAudioEngine();
+            document.querySelectorAll('.word-card').forEach(c => c.classList.remove('active-chip'));
+            if (selectedBlankWord === word) {
+                selectedBlankWord = null;
+            } else {
+                selectedBlankWord = word;
+                cardEl.classList.add('active-chip');
+                playSoundFx('tap');
+            }
+        }
+
+        function handleDragStart(e, word) {
+            initAudioEngine();
+            e.dataTransfer.setData('text/plain', word);
+        }
+
+        function handleSlotDragOver(e, slot) {
+            e.preventDefault();
+            slot.classList.add('slot-target-hover');
+        }
+
+        function handleSlotDragLeave(slot) {
+            slot.classList.remove('slot-target-hover');
+        }
+
+        function handleSlotDrop(e, itemId) {
+            e.preventDefault();
+            const slot = document.getElementById(`slot-${itemId}`);
+            if (slot) slot.classList.remove('slot-target-hover');
+            const word = e.dataTransfer.getData('text/plain');
+            if (word) {
+                placeWordInBlankSlot(itemId, word);
+            }
+        }
+
+        function handleBlankSlotClick(itemId) {
+            initAudioEngine();
+            if (selectedBlankWord) {
+                placeWordInBlankSlot(itemId, selectedBlankWord);
+                selectedBlankWord = null;
+                document.querySelectorAll('.word-card').forEach(c => c.classList.remove('active-chip'));
+            } else {
+                if (userBlanks[itemId]) {
+                    clearBlankSlot(itemId);
+                }
+            }
+        }
+
+        function placeWordInBlankSlot(itemId, word) {
+            userBlanks[itemId] = word;
+            const slot = document.getElementById(`slot-${itemId}`);
+            if (slot) {
+                slot.innerHTML = `
+                    <div class="flex items-center gap-1.5">
+                        <span class="en-font font-black text-purple-900 text-xl">${word}</span>
+                        <button type="button" onclick="event.stopPropagation(); clearBlankSlot('${itemId}')" class="text-slate-400 hover:text-rose-500 font-bold text-xs p-1">✕</button>
+                    </div>
+                `;
+            }
+            playSoundFx('drop');
+        }
+
+        function clearBlankSlot(itemId) {
+            delete userBlanks[itemId];
+            const slot = document.getElementById(`slot-${itemId}`);
+            if (slot) {
+                slot.className = "handwriting-slot min-w-[130px] min-h-[46px] px-3 py-1 rounded-md flex items-center justify-center cursor-pointer transition";
+                slot.innerHTML = `<span class="placeholder text-xs text-slate-400 font-sans font-normal">اسحب أو انقر هنا</span>`;
+            }
+            const fbk = document.getElementById(`fbk-${itemId}`);
+            if (fbk) fbk.classList.add('hidden');
+            playSoundFx('tap');
+        }
+
+        function checkBlanks() {
+            initAudioEngine();
+            let correct = 0;
+            const total = blanksData.length;
+
+            blanksData.forEach(item => {
+                const userAns = userBlanks[item.id];
+                const slot = document.getElementById(`slot-${item.id}`);
+                const fbk = document.getElementById(`fbk-${item.id}`);
+                if (!slot || !fbk) return;
+
+                fbk.classList.remove('hidden', 'text-emerald-700', 'text-rose-600');
+
+                if (userAns && userAns.toLowerCase() === item.expected.toLowerCase()) {
+                    correct++;
+                    slot.className = "handwriting-slot min-w-[130px] min-h-[46px] px-3 py-1 rounded-md flex items-center justify-center border-b-2 border-emerald-500 bg-emerald-50";
+                    fbk.classList.add('text-emerald-700');
+                    fbk.innerHTML = `✓ أحسنت! إجابة صحيحة (${item.subject} + ${item.expected}).`;
+                } else {
+                    slot.className = "handwriting-slot min-w-[130px] min-h-[46px] px-3 py-1 rounded-md flex items-center justify-center border-b-2 border-rose-500 bg-rose-50";
+                    fbk.classList.add('text-rose-600');
+                    fbk.innerHTML = `✕ الإجابة الصحيحة هي: <b class="en-font font-black underline">${item.expected}</b> (${item.hint}).`;
+                }
+            });
+
+            scoredBlanksCount = correct;
+            updateGlobalScore(scoredBlanksCount, scoredBubblesCount);
+
+            const overall = document.getElementById('blanksFeedback');
+            if (correct === total) {
+                overall.innerHTML = `<span class="text-emerald-700 font-black">🎉 إتقان تام للقسم الأول (${total}/${total})! أحسنت!</span>`;
+                playSoundFx('cheer');
+                confetti({ particleCount: 70, spread: 65, origin: { y: 0.6 } });
+            } else {
+                overall.innerHTML = `<span class="text-purple-900 font-bold">أصبت في ${correct} من ${total}. تفقد الملاحظات وحاول مجدداً.</span>`;
+                playSoundFx(correct > 0 ? 'success' : 'fail');
+            }
+        }
+
+        function resetBlanks() {
+            initBlanks();
+        }
+
+        // 7 Pronouns from the worksheet
+        const pronounsToClassify = [
+            { id: 'p_i', word: 'I', target: 'am' },
+            { id: 'p_he', word: 'He', target: 'is' },
+            { id: 'p_she', word: 'she', target: 'is' },
+            { id: 'p_it', word: 'it', target: 'is' },
+            { id: 'p_we', word: 'We', target: 'are' },
+            { id: 'p_they', word: 'they', target: 'are' },
+            { id: 'p_you', word: 'you', target: 'are' }
+        ];
+
+        let bubbleState = {
+            pool: [],
+            am: [],
+            is: [],
+            are: []
+        };
+        let activePronoun = null;
+
+        function initBubbles() {
+            activePronoun = null;
+            document.getElementById('bubblesFeedback').innerHTML = '';
+            document.getElementById('content-bucket-am').innerHTML = '';
+            document.getElementById('content-bucket-is').innerHTML = '';
+            document.getElementById('content-bucket-are').innerHTML = '';
+
+            const shuffled = [...pronounsToClassify].sort(() => Math.random() - 0.5);
+            bubbleState = {
+                pool: shuffled,
+                am: [],
+                is: [],
+                are: []
+            };
+
+            renderBubblePool();
+        }
+
+        function renderBubblePool() {
+            const poolEl = document.getElementById('pronounPool');
+            poolEl.innerHTML = '';
+
+            if (bubbleState.pool.length === 0) {
+                poolEl.innerHTML = `<span class="text-xs text-purple-700 font-bold py-1">✨ تم توزيع جميع الضمائر في الفقاعات! اضغط "تحقق من الفقاعات".</span>`;
+                return;
+            }
+
+            bubbleState.pool.forEach(item => {
+                const chip = document.createElement('div');
+                chip.id = `chip-pro-${item.id}`;
+                chip.dataset.id = item.id;
+                chip.draggable = true;
+                chip.className = "en-font font-black text-base bg-white text-purple-950 border-2 border-purple-300 hover:border-purple-500 px-4 py-2 rounded-2xl shadow-xs cursor-grab select-none active:scale-95 transition";
+                chip.innerText = item.word;
+
+                chip.ondragstart = (e) => {
+                    initAudioEngine();
+                    e.dataTransfer.setData('text/plain', item.id);
+                };
+
+                chip.onclick = () => selectPronounChip(item, chip);
+                poolEl.appendChild(chip);
+            });
+        }
+
+        function selectPronounChip(item, chipEl) {
+            initAudioEngine();
+            document.querySelectorAll('#pronounPool div').forEach(c => c.classList.remove('active-chip'));
+            if (activePronoun && activePronoun.id === item.id) {
+                activePronoun = null;
+            } else {
+                activePronoun = item;
+                chipEl.classList.add('active-chip');
+                playSoundFx('tap');
+            }
+        }
+
+        function handleBucketClick(bucketName) {
+            initAudioEngine();
+            if (activePronoun) {
+                movePronounToBucket(activePronoun.id, bucketName);
+                activePronoun = null;
+            }
+        }
+
+        function handleBucketDragOver(e, el) {
+            e.preventDefault();
+            el.classList.add('scale-[1.02]');
+        }
+
+        function handleBucketDragLeave(el) {
+            el.classList.remove('scale-[1.02]');
+        }
+
+        function handleBucketDrop(e, bucketName) {
+            e.preventDefault();
+            const el = document.getElementById(`bucket-${bucketName}`);
+            if (el) handleBucketDragLeave(el);
+            const itemId = e.dataTransfer.getData('text/plain');
+            if (itemId) {
+                movePronounToBucket(itemId, bucketName);
+            }
+        }
+
+        function movePronounToBucket(itemId, bucketName) {
+            const itemIdx = bubbleState.pool.findIndex(x => x.id === itemId);
+            if (itemIdx === -1) return;
+
+            const item = bubbleState.pool.splice(itemIdx, 1)[0];
+            bubbleState[bucketName].push(item);
+            playSoundFx('drop');
+
+            renderBucketContent(bucketName);
+            renderBubblePool();
+        }
+
+        function renderBucketContent(bucketName) {
+            const container = document.getElementById(`content-bucket-${bucketName}`);
+            if (!container) return;
+            container.innerHTML = '';
+
+            bubbleState[bucketName].forEach((item, idx) => {
+                const pill = document.createElement('div');
+                pill.className = "en-font font-black text-sm bg-white text-slate-800 border border-slate-300 px-3 py-1 rounded-xl shadow-2xs flex items-center gap-1.5 transition";
+                pill.innerHTML = `
+                    <span>${item.word}</span>
+                    <button type="button" onclick="returnPronounToPool('${bucketName}', ${idx})" class="text-slate-400 hover:text-rose-500 font-bold text-xs">✕</button>
+                `;
+                container.appendChild(pill);
+            });
+        }
+
+        function returnPronounToPool(bucketName, index) {
+            initAudioEngine();
+            const item = bubbleState[bucketName].splice(index, 1)[0];
+            bubbleState.pool.push(item);
+            playSoundFx('tap');
+            renderBucketContent(bucketName);
+            renderBubblePool();
+        }
+
+        function checkBubbles() {
+            initAudioEngine();
+            const total = pronounsToClassify.length;
+            let correct = 0;
+            const placedCount = bubbleState.am.length + bubbleState.is.length + bubbleState.are.length;
+
+            const fbk = document.getElementById('bubblesFeedback');
+
+            if (placedCount < total) {
+                fbk.innerHTML = `<span class="text-amber-700 font-bold">يرجى تصنيف جميع الضمائر السبعة أولاً (${placedCount}/${total}).</span>`;
+                playSoundFx('fail');
+                return;
+            }
+
+            // Verify each bucket
+            ['am', 'is', 'are'].forEach(bName => {
+                const container = document.getElementById(`content-bucket-${bName}`);
+                container.innerHTML = '';
+
+                bubbleState[bName].forEach((item, idx) => {
+                    const isRight = item.target === bName;
+                    if (isRight) correct++;
+
+                    const pill = document.createElement('div');
+                    pill.className = `en-font font-black text-sm px-3 py-1 rounded-xl border flex items-center gap-1.5 ${isRight ? 'bg-emerald-100 text-emerald-900 border-emerald-400' : 'bg-rose-100 text-rose-900 border-rose-400'}`;
+                    pill.innerHTML = `
+                        <span>${item.word}</span>
+                        <span>${isRight ? '✓' : '✕'}</span>
+                    `;
+                    container.appendChild(pill);
+                });
+            });
+
+            scoredBubblesCount = correct;
+            updateGlobalScore(scoredBlanksCount, scoredBubblesCount);
+
+            if (correct === total) {
+                fbk.innerHTML = `<span class="text-emerald-700 font-black">🎉 رائع ومبهر! صنّفت جميع الضمائر في فقاعات أفعالها بشكل سليم (${correct}/${total})!</span>`;
+                playSoundFx('cheer');
+                confetti({ particleCount: 70, spread: 65, origin: { y: 0.6 } });
+            } else {
+                fbk.innerHTML = `<span class="text-rose-700 font-bold">أصبت في ${correct} من ${total}. تذكّر: (I -> am)، و (He, she, it -> is)، و (We, they, you -> are).</span>`;
+                playSoundFx('fail');
+            }
+        }
+
+        function resetBubbles() {
+            initBubbles();
+        }
+
+        const reorderSentences = [
+            { id: 'r1', words: ['I', 'am', 'a doctor.'], correct: 'I am a doctor.' },
+            { id: 'r2', words: ['She', 'is', 'a nurse.'], correct: 'She is a nurse.' },
+            { id: 'r3', words: ['He', 'is', 'happy.'], correct: 'He is happy.' },
+            { id: 'r4', words: ['They', 'are', 'students.'], correct: 'They are students.' },
+            { id: 'r5', words: ['You', 'are', 'beautiful.'], correct: 'You are beautiful.' }
+        ];
+
+        let reorderState = {};
+
+        function initReorder() {
+            reorderState = {};
+            const container = document.getElementById('reorderContainer');
+            container.innerHTML = '';
+
+            reorderSentences.forEach((item, idx) => {
+                let shuffled = [...item.words].sort(() => Math.random() - 0.5);
+                if (shuffled.join(' ') === item.correct) shuffled.reverse();
+
+                reorderState[item.id] = { placed: [], pool: [...shuffled] };
+
+                const card = document.createElement('div');
+                card.className = "p-4 md:p-5 rounded-2xl bg-slate-50 border border-slate-200";
+                card.innerHTML = `
+                    <div class="flex items-center justify-between text-xs font-bold mb-3" dir="rtl">
+                        <span class="text-purple-900 font-black">الجملة ${idx + 1}: رتّب الكلمات</span>
+                        <span class="text-slate-500 font-sans text-[11px]">اضغط على الكلمة لنقلها</span>
+                    </div>
+
+                    <!-- Target Box -->
+                    <div id="target-r-${item.id}" dir="ltr" class="min-h-[50px] p-2 rounded-xl bg-white border-2 border-dashed border-slate-300 flex flex-wrap items-center gap-2 mb-3"></div>
+
+                    <!-- Pool Box -->
+                    <div id="pool-r-${item.id}" dir="ltr" class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-200"></div>
+
+                    <!-- Controls -->
+                    <div class="mt-3 flex items-center justify-between" dir="rtl">
+                        <div id="fbk-r-${item.id}" class="text-xs font-bold hidden"></div>
+                        <div class="flex items-center gap-2 mr-auto" dir="ltr">
+                            <button type="button" onclick="checkReorderItem('${item.id}')" class="px-3.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs">تحقق</button>
+                            <button type="button" onclick="resetReorderItem('${item.id}')" class="px-3 py-1.5 rounded-xl border border-slate-300 text-slate-600 text-xs font-bold">↺ إعادة</button>
+                            <button type="button" onclick="speakEnglish('${item.correct}')" class="p-1.5 rounded-xl bg-slate-100 hover:text-purple-600 text-slate-500">🔊</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+                renderReorderItemUI(item.id);
+            });
+        }
+
+        function renderReorderItemUI(itemId) {
+            const state = reorderState[itemId];
+            const target = document.getElementById(`target-r-${itemId}`);
+            const pool = document.getElementById(`pool-r-${itemId}`);
+            if (!target || !pool || !state) return;
+
+            target.innerHTML = '';
+            if (state.placed.length === 0) {
+                target.innerHTML = `<span class="text-xs text-slate-400 font-sans px-2">انقر على الكلمات بالأسفل لترتيبها هنا...</span>`;
+            } else {
+                state.placed.forEach((w, i) => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = "en-font font-black text-sm bg-purple-100 text-purple-950 border border-purple-300 px-3 py-1 rounded-xl flex items-center gap-1";
+                    btn.innerHTML = `<span>${w}</span><span class="text-xs opacity-60">✕</span>`;
+                    btn.onclick = () => returnReorderWord(itemId, i);
+                    target.appendChild(btn);
+                });
+            }
+
+            pool.innerHTML = '';
+            state.pool.forEach((w, i) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = "en-font font-bold text-sm bg-white text-slate-800 border-2 border-slate-200 hover:border-purple-400 px-3 py-1 rounded-xl shadow-xs active:scale-95";
+                btn.innerText = w;
+                btn.onclick = () => moveReorderWord(itemId, i);
+                pool.appendChild(btn);
+            });
+        }
+
+        function moveReorderWord(itemId, index) {
+            initAudioEngine();
+            const state = reorderState[itemId];
+            const w = state.pool.splice(index, 1)[0];
+            state.placed.push(w);
+            playSoundFx('tap');
+            renderReorderItemUI(itemId);
+        }
+
+        function returnReorderWord(itemId, index) {
+            initAudioEngine();
+            const state = reorderState[itemId];
+            const w = state.placed.splice(index, 1)[0];
+            state.pool.push(w);
+            playSoundFx('tap');
+            renderReorderItemUI(itemId);
+        }
+
+        function resetReorderItem(itemId) {
+            const item = reorderSentences.find(x => x.id === itemId);
+            if (!item) return;
+            let shuffled = [...item.words].sort(() => Math.random() - 0.5);
+            reorderState[itemId] = { placed: [], pool: [...shuffled] };
+            const fbk = document.getElementById(`fbk-r-${itemId}`);
+            if (fbk) fbk.classList.add('hidden');
+            renderReorderItemUI(itemId);
+        }
+
+        function checkReorderItem(itemId) {
+            initAudioEngine();
+            const item = reorderSentences.find(x => x.id === itemId);
+            const state = reorderState[itemId];
+            const fbk = document.getElementById(`fbk-r-${itemId}`);
+            const target = document.getElementById(`target-r-${itemId}`);
+            if (!item || !state || !fbk || !target) return;
+
+            fbk.classList.remove('hidden', 'text-emerald-700', 'text-rose-600');
+
+            if (state.placed.join(' ') === item.correct) {
+                target.className = "min-h-[50px] p-2 rounded-xl bg-emerald-50 border-2 border-emerald-400 flex flex-wrap items-center gap-2 mb-3";
+                fbk.classList.add('text-emerald-700');
+                fbk.innerHTML = `✓ أحسنت! صياغة وترتيب نحوي ممتاز.`;
+                playSoundFx('success');
+            } else {
+                target.className = "min-h-[50px] p-2 rounded-xl bg-rose-50 border-2 border-rose-400 flex flex-wrap items-center gap-2 mb-3";
+                fbk.classList.add('text-rose-600');
+                fbk.innerHTML = `✕ ترتيب غير صحيح. تذكّر: الفاعل أولاً ثم فعل الكينونة المناسب.`;
+                playSoundFx('fail');
+            }
+        }
+
+        // Initialize all activities on load
+        window.addEventListener('DOMContentLoaded', () => {
+            initBlanks();
+            initBubbles();
+            initReorder();
+        });
+    </script>
+</body>
+</html>
